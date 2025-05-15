@@ -18,6 +18,9 @@ class Data:
         words = ["H"] * self.wires()
         pi = list(range(self.wires()))
         for cross in self.crossings():
+            if cross == None:
+                words = [c + "HH" for c in words]
+                continue
             permutate = pi[cross]
             permutateNext = pi[cross + 1]
             words = [c + ("D" if i == permutate else "U" if i == permutateNext else "H") + "H" for i, c in enumerate(words)]
@@ -41,7 +44,7 @@ class Data:
     def reide2(self, m: int):
         v = self.reidemeister(m)
         if v != -1:
-            self.__crossings = self.__crossings[:m] + self.__crossings[m+1:v] + self.__crossings[v+1:]
+            self.__crossings = self.__crossings[:m] + [None] + self.__crossings[m+1:v] + [None] + self.__crossings[v+1:]
 
 class App:
     
